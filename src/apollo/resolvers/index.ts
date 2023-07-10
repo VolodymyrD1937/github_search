@@ -7,7 +7,15 @@ const query = GET_FAVORITE_REPOS_LIST
 
 export default {
   Mutation: {
-    addRepoToFavorites: (_, { repo }: { repo: RepoModel }, { cache }) => {
+    addRepoToFavorites: (
+      _: string,
+      { repo }: { repo: RepoModel },
+      {
+        cache,
+      }: {
+        cache: any
+      },
+    ) => {
       const previousState = cache.readQuery({ query })
       const newFavRepo = {
         __typename: "FavRepoItem",
@@ -25,7 +33,15 @@ export default {
       toast.success("Repo added to favorites")
       return newFavRepo
     },
-    removeRepoFromFavorites: (_, { id }, { cache }) => {
+    removeRepoFromFavorites: (
+      _: string,
+      { id }: { id: string },
+      {
+        cache,
+      }: {
+        cache: any
+      },
+    ) => {
       const currentFavRepos = cache.readQuery({
         query,
       })
@@ -43,7 +59,15 @@ export default {
       toast.success("Repo removed from favorites")
       return null
     },
-    rateFavoriteRepo: (_, variables, { cache }) => {
+    rateFavoriteRepo: (
+      _: string,
+      variables: { id: string; rating: number },
+      {
+        cache,
+      }: {
+        cache: any
+      },
+    ) => {
       const id = `FavRepoItem:${variables.id}`
       const fragment = gql`
         fragment RateFavRepo on FavRepoItem {

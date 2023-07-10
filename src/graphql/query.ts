@@ -18,11 +18,7 @@ export const GET_REPOS_FROM_GITHUB = gql`
           ... on Repository {
             id
             name
-            createdAt
             description
-            isArchived
-            isPrivate
-            url
           }
         }
       }

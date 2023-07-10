@@ -23,10 +23,38 @@ export const SearchPage = () => {
 
   const debouncer = useCallback(_.debounce(queryString, debounceTime), [])
 
-  const searchResult = data?.search?.edges?.map(repo => repo.node)
+  const searchResult = data?.search?.edges?.map(
+    (repo: { node: RepoModel; __typename: string }) => repo.node,
+  )
 
   const emptySearch = (!data || searchResult.length === 0) && !loading
 
+  const getRepoCard = (repo: RepoModel) => {
+    const repoData = {
+      id: repo.id,
+      name: repo.name,
+      description: repo.description,
+    }
+
+    const isFavorite = favReposData.favoriteRepos?.find(
+      (favRepo: RepoModel) => favRepo.id === repo.id,
+    )
+
+    return (
+      <RepoCard
+        repo={repo}
+        key={repo.id}
+        isRepoFavorite={isFavorite}
+        onClick={() => {
+          if (!isFavorite) {
+            addRepoToFavorites({ variables: { repo: repoData } })
+          } else {
+            removeRepoFromFavorites({ variables: { id: repo.id } })
+          }
+        }}
+      />
+    )
+  }
   return (
     <div className="container">
       <Input
@@ -45,32 +73,7 @@ export const SearchPage = () => {
           container
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 1, sm: 8, md: 12 }}>
-          {searchResult?.map(repo => {
-            const repoData = {
-              id: repo.id,
-              name: repo.name,
-              description: repo.description,
-            }
-
-            const isFavorite = favReposData.favoriteRepos?.find(
-              (favRepo: RepoModel) => favRepo.id === repo.id,
-            )
-
-            return (
-              <RepoCard
-                repo={repo}
-                key={repo.id}
-                isRepoFavorite={isFavorite}
-                onClick={() => {
-                  if (!isFavorite) {
-                    addRepoToFavorites({ variables: { repo: repoData } })
-                  } else {
-                    removeRepoFromFavorites({ variables: { id: repo.id } })
-                  }
-                }}
-              />
-            )
-          })}
+          {searchResult?.map((repo: RepoModel) => getRepoCard(repo))}
         </Grid>
       )}
     </div>
