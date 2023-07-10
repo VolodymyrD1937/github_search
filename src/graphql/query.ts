@@ -19,6 +19,7 @@ export const GET_REPOS_FROM_GITHUB = gql`
             id
             name
             description
+            url
           }
         }
       }
@@ -33,6 +34,7 @@ export const GET_FAVORITE_REPOS_LIST = gql`
       name
       description
       rating
+      url
     }
   }
 `

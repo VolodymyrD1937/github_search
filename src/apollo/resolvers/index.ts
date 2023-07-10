@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
+import { toast } from "react-toastify"
 import { RepoModel } from "../../models/RepoModel"
 import { GET_FAVORITE_REPOS_LIST } from "../../graphql/query"
-import { toast } from "react-toastify"
 
 const query = GET_FAVORITE_REPOS_LIST
 
@@ -22,6 +22,7 @@ export default {
         id: repo.id,
         name: repo.name,
         description: repo.description,
+        url: repo.url,
         rating: 0,
       }
       const data = {

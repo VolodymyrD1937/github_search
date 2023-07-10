@@ -5,6 +5,7 @@ const typeDefs = gql`
     id: ID!
     name: String!
     description: String!
+    url: String!
     rating: Int
   }
   type Mutation {

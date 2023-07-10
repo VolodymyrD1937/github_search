@@ -6,6 +6,7 @@ export const ADD_REPO_TO_FAVORITES = gql`
       id
       name
       description
+      url
       rating
     }
   }

@@ -1,11 +1,10 @@
-import { Grid } from "@mui/material"
-import { RepoCard } from "../components"
 import { useMutation, useQuery } from "@apollo/client"
-import { GET_FAVORITE_REPOS_LIST } from "../graphql/query"
 import {
   RATE_FAVORITE_REPO,
   REMOVE_REPO_FROM_FAVORITES,
 } from "../graphql/mutation"
+import { GET_FAVORITE_REPOS_LIST } from "../graphql/query"
+import { RepoCard, RepoList } from "../components"
 import { RepoModel } from "../models/RepoModel"
 
 export const FavoriteListPage = () => {
@@ -20,10 +19,7 @@ export const FavoriteListPage = () => {
       {favoriteRepos.length === 0 ? (
         <h2>You don`t have any favorite repositories yet</h2>
       ) : (
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 1, sm: 8, md: 12 }}>
+        <RepoList>
           {favoriteRepos.map((repo: RepoModel) => (
             <RepoCard
               repo={repo}
@@ -38,7 +34,7 @@ export const FavoriteListPage = () => {
               }
             />
           ))}
-        </Grid>
+        </RepoList>
       )}
     </div>
   )

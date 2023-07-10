@@ -7,10 +7,11 @@ import {
   Typography,
   Rating,
 } from "@mui/material"
-import { RepoModel } from "../models/RepoModel"
-import { cardStyle, descriptionStyle, iconStyle } from "./styles"
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
 import FavoriteIcon from "@mui/icons-material/Favorite"
+import GitHubIcon from "@mui/icons-material/GitHub"
+import { RepoModel } from "../models/RepoModel"
+import { cardStyle, descriptionStyle, iconStyle } from "./styles"
 
 interface RepoCardProps {
   repo: RepoModel
@@ -28,6 +29,17 @@ export const RepoCard = (props: RepoCardProps) => {
     onRatingChange,
     showRating = false,
   } = props
+
+  const RepoTooltip = () => (
+    <Tooltip
+      title={isRepoFavorite ? "Remove from favorites" : "Add to favorites"}>
+      {isRepoFavorite ? (
+        <FavoriteIcon sx={iconStyle} onClick={onClick} />
+      ) : (
+        <FavoriteBorderIcon sx={iconStyle} onClick={onClick} />
+      )}
+    </Tooltip>
+  )
 
   return (
     <Grid item xs={1} sm={4} md={4} key={repo.id}>
@@ -51,15 +63,12 @@ export const RepoCard = (props: RepoCardProps) => {
                 onChange={onRatingChange}
               />
             )}
-            <Tooltip
-              title={
-                isRepoFavorite ? "Remove from favorites" : "Add to favorites"
-              }>
-              {isRepoFavorite ? (
-                <FavoriteIcon sx={iconStyle} onClick={onClick} />
-              ) : (
-                <FavoriteBorderIcon sx={iconStyle} onClick={onClick} />
-              )}
+            <RepoTooltip />
+            <Tooltip title="Open in GitHub">
+              <GitHubIcon
+                sx={{ cursor: "pointer" }}
+                onClick={() => window.open(repo.url, "_blank")}
+              />
             </Tooltip>
           </Box>
         </CardContent>

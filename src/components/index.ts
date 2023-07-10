@@ -1,4 +1,6 @@
 export * from "./AppBar"
 export * from "./AppBarButton"
 export * from "./Input"
+export * from "./Loader"
 export * from "./RepoCard"
+export * from "./RepoList"

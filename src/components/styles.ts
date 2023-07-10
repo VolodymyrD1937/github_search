@@ -23,4 +23,5 @@ export const descriptionStyle = {
 export const iconStyle = {
   color: red[500],
   cursor: "pointer",
+  margin: " 0 16px 0 auto",
 }

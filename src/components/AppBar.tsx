@@ -1,8 +1,8 @@
 import { AppBar, Box, Toolbar, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import { AppBarButton } from "./AppBarButton"
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
 import FavoriteIcon from "@mui/icons-material/Favorite"
+import { AppBarButton } from "./AppBarButton"
 
 export const TopAppBar = () => {
   const navigate = useNavigate()
