@@ -30,7 +30,7 @@ export default {
         query,
       })
       const removedFavoriteReposArr = currentFavRepos.favoriteRepos.filter(
-        repo => {
+        (repo: RepoModel) => {
           return repo.id !== id
         },
       )

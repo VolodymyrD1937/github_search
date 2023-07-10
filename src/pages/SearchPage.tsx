@@ -12,17 +12,20 @@ import {
   REMOVE_REPO_FROM_FAVORITES,
 } from "../graphql/mutation"
 import { debounceTime } from "../constants/debounce"
+import { RepoModel } from "../models/RepoModel"
 
 export const SearchPage = () => {
-  const [queryString, { loading, error, data }] = useLazyQuery(
-    GET_REPOS_FROM_GITHUB,
-  )
+  const [queryString, { loading, data }] = useLazyQuery(GET_REPOS_FROM_GITHUB)
   const { data: favReposData } = useQuery(GET_FAVORITE_REPOS_LIST)
 
   const [addRepoToFavorites] = useMutation(ADD_REPO_TO_FAVORITES)
   const [removeRepoFromFavorites] = useMutation(REMOVE_REPO_FROM_FAVORITES)
 
   const debouncer = useCallback(_.debounce(queryString, debounceTime), [])
+
+  const searchResult = data?.search?.edges?.map(repo => repo.node)
+
+  const emptySearch = (!data || searchResult.length === 0) && !loading
 
   return (
     <div className="container">
@@ -32,11 +35,7 @@ export const SearchPage = () => {
           debouncer({ variables: { queryString: e.target.value } })
         }}
       />
-
-      {(!data || data?.search?.edges.length === 0) && !loading && (
-        <h2>Start your search. Just enter anything above</h2>
-      )}
-
+      {emptySearch && <h2>Start your search. Just enter anything above</h2>}
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
           <CircularProgress />
@@ -46,27 +45,27 @@ export const SearchPage = () => {
           container
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 1, sm: 8, md: 12 }}>
-          {data?.search?.edges?.map(({ node }) => {
+          {searchResult?.map(repo => {
             const repoData = {
-              id: node.id,
-              name: node.name,
-              description: node.description,
+              id: repo.id,
+              name: repo.name,
+              description: repo.description,
             }
 
             const isFavorite = favReposData.favoriteRepos?.find(
-              repo => repo.id === node.id,
+              (favRepo: RepoModel) => favRepo.id === repo.id,
             )
 
             return (
               <RepoCard
-                repo={node}
-                key={node.id}
+                repo={repo}
+                key={repo.id}
                 isRepoFavorite={isFavorite}
                 onClick={() => {
                   if (!isFavorite) {
                     addRepoToFavorites({ variables: { repo: repoData } })
                   } else {
-                    removeRepoFromFavorites({ variables: { id: node.id } })
+                    removeRepoFromFavorites({ variables: { id: repo.id } })
                   }
                 }}
               />

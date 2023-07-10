@@ -14,9 +14,9 @@ Also, before starting the project, you need to generate a personal access token 
 
 1. In the upper-right corner of any page on the GitHub, click your profile photo, then click Settings.
 
-2. In the left sidebar, click  Developer settings.
+2. In the left sidebar, click Developer settings.
 
-3. In the left sidebar, under  Personal access tokens, click Fine-grained tokens.
+3. In the left sidebar, under Personal access tokens, click Fine-grained tokens.
 
 4. Click Generate new token.
 
@@ -27,7 +27,6 @@ Also, before starting the project, you need to generate a personal access token 
 7. Click Generate token.
 
 More info: [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
-
 
 ### `npm run dev`
 
