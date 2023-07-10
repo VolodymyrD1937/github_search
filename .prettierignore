@@ -1,0 +1,8 @@
+# Add files here to ignore them from prettier formatting
+
+node_modules/
+dist/
+.prettierrc.js
+.eslintrc.js
+.prettierrc.сjs
+.eslintrc.сjs
