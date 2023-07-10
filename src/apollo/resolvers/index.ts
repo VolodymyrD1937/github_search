@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import { RepoModel } from "../../models/RepoModel"
 import { GET_FAVORITE_REPOS_LIST } from "../../graphql/query"
+import { toast } from "react-toastify"
 
 const query = GET_FAVORITE_REPOS_LIST
 
@@ -20,6 +21,8 @@ export default {
       }
 
       cache.writeQuery({ query, data })
+
+      toast.success("Repo added to favorites")
       return newFavRepo
     },
     removeRepoFromFavorites: (_, { id }, { cache }) => {
@@ -36,6 +39,8 @@ export default {
       }
 
       cache.writeQuery({ query, data })
+
+      toast.success("Repo removed from favorites")
       return null
     },
     rateFavoriteRepo: (_, variables, { cache }) => {
